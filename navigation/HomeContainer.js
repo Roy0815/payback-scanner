@@ -1,8 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
-import HomeContainer from "./navigation/HomeContainer";
 
-export default function App() {
-  return <HomeContainer />;
+export default function HomeContainer() {
+  return (
+    <View style={styles.main}>
+      <Text>Hello</Text>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
