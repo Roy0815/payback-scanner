@@ -3,21 +3,18 @@ import { View, StyleSheet, Text } from "react-native";
 export default function HomeScreen({ navigation }) {
   return (
     <View style={style.home}>
-      <Text
-        onPress={() => alert("This is the homescreen.")}
-        style={style.homeText}
-      >
-        Home Screen
-      </Text>
+      <Text>Home Screen</Text>
     </View>
   );
 }
 
 const style = StyleSheet.create({
   home: {
+    backgroundColor: "#fff",
     flex: 1,
-    alignItems: "center",
+    flexDirection: "row",
     justifyContent: "center",
+    alignItems: "center",
   },
   homeText: {
     fontSize: 26,

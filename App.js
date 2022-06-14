@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import HomeContainer from "./navigation/HomeContainer";
+import HomeContainer from "./navigation/MainContainer";
 
 export default function App() {
   return <HomeContainer />;
