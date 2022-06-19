@@ -1,14 +1,18 @@
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Button } from "react-native";
 
 export default function HomeScreen({ navigation }) {
   return (
-    <View style={style.home}>
+    <View style={styles.home}>
       <Text>Home Screen</Text>
+      <Button
+        title="To Case Details"
+        onPress={() => navigation.push("Case Details")}
+      />
     </View>
   );
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   home: {
     backgroundColor: "#fff",
     flex: 1,
