@@ -10,9 +10,8 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
 
-import { getCases, formatDate } from "../../functions/caseFunctions";
+import { getAllCases, formatDate } from "../../functions/caseFunctions";
 
 export default function HomeScreen({ navigation }) {
   const Item = ({ item }) => (
@@ -39,7 +38,7 @@ export default function HomeScreen({ navigation }) {
   const [allCases, setAllCases] = useState([]);
 
   const setCasesAsync = async () => {
-    if (allCases.length == 0) setAllCases(await getCases());
+    if (!allCases || allCases.length == 0) setAllCases(await getAllCases());
   };
 
   useEffect(() => {

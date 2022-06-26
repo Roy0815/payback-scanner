@@ -8,6 +8,8 @@ import MatIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Camera, CameraType } from "expo-camera";
 import { ToastProvider } from "react-native-toast-notifications";
 
+import { setCase } from "../functions/caseFunctions";
+
 // Screens
 import {
   HomeScreen,
@@ -25,6 +27,15 @@ const settingsName = "Settings";
 // Navigation objects
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
+
+// local functions
+const _addCase = () => {
+  // setCase({
+  //   id: new Date().getTime(),
+  //   name: "Aral 20,23€",
+  //   uri: "file:///storage/emulated/0/Pictures/Payback Scanner/Abc.jpg",
+  // });
+};
 
 // Stack Wrapper
 const HomeStackScreen = () => (
@@ -50,7 +61,7 @@ const HomeStackScreen = () => (
               name="filter-outline"
             />
             <MatIcons.Button
-              onPress={() => alert("This will add a case")}
+              onPress={_addCase}
               backgroundColor="white"
               iconStyle={styles.headerButton}
               size={22}
