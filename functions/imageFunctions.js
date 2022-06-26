@@ -34,6 +34,7 @@ const _getImageFromDevice = async (name) => {
   if (index != -1) {
     //fill buffer and return
     imageBuffer[name] = result.assets[index].uri;
+    console.log(result.assets[index].uri);
     return result.assets[index].uri;
   }
 };
