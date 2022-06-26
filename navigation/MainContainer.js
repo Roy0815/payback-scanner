@@ -1,8 +1,10 @@
 import React from "react";
+import { View, StyleSheet, Text, Button } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import MatIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Camera, CameraType } from "expo-camera";
 import { ToastProvider } from "react-native-toast-notifications";
 
@@ -27,8 +29,42 @@ const HomeStack = createStackNavigator();
 // Stack Wrapper
 const HomeStackScreen = () => (
   <HomeStack.Navigator>
-    <HomeStack.Screen name={homeName} component={HomeScreen} />
-    <HomeStack.Screen name={caseDetailName} component={CaseDetailScreen} />
+    <HomeStack.Screen
+      name={homeName}
+      component={HomeScreen}
+      options={{
+        headerRight: () => (
+          <View style={styles.headerButtonView}>
+            <MatIcons.Button
+              onPress={() => alert("This will sort the cases")}
+              backgroundColor="white"
+              iconStyle={styles.headerButton}
+              size={22}
+              name="sort-variant"
+            />
+            <MatIcons.Button
+              onPress={() => alert("This will filter the cases")}
+              backgroundColor="white"
+              iconStyle={styles.headerButton}
+              size={21}
+              name="filter-outline"
+            />
+            <MatIcons.Button
+              onPress={() => alert("This will add a case")}
+              backgroundColor="white"
+              iconStyle={styles.headerButton}
+              size={22}
+              name="plus"
+            />
+          </View>
+        ),
+      }}
+    />
+    <HomeStack.Screen
+      name={caseDetailName}
+      component={CaseDetailScreen}
+      options={({ route }) => ({ title: route.params.case.name })}
+    />
   </HomeStack.Navigator>
 );
 
@@ -85,3 +121,12 @@ export default class HomeContainer extends React.Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  headerButton: {
+    color: "black",
+  },
+  headerButtonView: {
+    flexDirection: "row",
+  },
+});
