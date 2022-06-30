@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   View,
@@ -11,12 +11,16 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import { getAllCases, formatDate } from "../../functions/caseFunctions";
+import { formatDate } from "../../functions/caseFunctions";
+import { caseDetailName } from "../constants";
+import { CaseContext } from "../context";
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({ navigation, route }) {
+  const { listCases } = React.useContext(CaseContext);
+
   const Item = ({ item }) => (
     <TouchableOpacity
-      onPress={() => navigation.push("Case Details", { case: item })}
+      onPress={() => navigation.push(caseDetailName, { case: item })}
     >
       <View style={styles.item}>
         <View style={styles.itemViewInfo}>
@@ -35,20 +39,11 @@ export default function HomeScreen({ navigation }) {
   );
 
   const renderItem = ({ item }) => <Item item={item} />;
-  const [allCases, setAllCases] = useState([]);
-
-  const setCasesAsync = async () => {
-    if (!allCases || allCases.length == 0) setAllCases(await getAllCases());
-  };
-
-  useEffect(() => {
-    setCasesAsync();
-  }, [allCases]);
 
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={allCases}
+        data={listCases}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
