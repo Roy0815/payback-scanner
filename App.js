@@ -1,6 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { getAllCases, sortCases } from "./functions/caseFunctions";
+
+//local imports
+import { getAllCases, sortCases, setCase } from "./functions/caseFunctions";
 import HomeContainer from "./navigation/MainContainer";
 import { CaseContext, ListContext } from "./navigation/context";
 
@@ -11,6 +13,7 @@ export default function App() {
   const [isLoading, setLoading] = React.useState(true);
   const [filterSettings, setFilter] = React.useState(false);
   const [sortSettings, setSort] = React.useState(false);
+  const [switchUpdateCases, setUpdateCases] = React.useState(false);
 
   //local methods
   const _filterCases = () => {
@@ -22,6 +25,21 @@ export default function App() {
     setFilter(!filterSettings);
   };
 
+  const _updateCase = (object) => {
+    let cases = allCases;
+    let index = cases.findIndex((item) => item.id === object.id);
+
+    if (index === -1) return;
+
+    setCase(cases[index]);
+    cases[index] = object;
+    setAllCases(cases);
+    setListCases(cases);
+
+    setUpdateCases(!switchUpdateCases);
+    //filter and sort
+  };
+
   //contexts
   const caseContext = React.useMemo(() => {
     return {
@@ -31,9 +49,11 @@ export default function App() {
       },
       filterCases: _filterCases,
       addCase: () => {},
+      updateCase: _updateCase,
       listCases,
+      allCases,
     };
-  }, [listCases, sortSettings]);
+  }, [switchUpdateCases, listCases, allCases, sortSettings]);
 
   const listContext = React.useMemo(() => {
     return {
@@ -54,7 +74,7 @@ export default function App() {
   return (
     <CaseContext.Provider value={caseContext}>
       <ListContext.Provider value={listContext}>
-        <HomeContainer allCases={allCases} />
+        <HomeContainer />
       </ListContext.Provider>
     </CaseContext.Provider>
   );
