@@ -1,3 +1,4 @@
+//external imports
 import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
@@ -11,6 +12,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+//local imports
 import { formatDate } from "../../functions/caseFunctions";
 import { caseDetailName } from "../constants";
 import { CaseContext } from "../context";
@@ -26,7 +28,6 @@ export default function HomeScreen({ navigation, route }) {
         <View style={styles.itemViewInfo}>
           <View style={styles.itemViewHeader}>
             <Text style={styles.itemNameText}>{item.name}</Text>
-            {/* <Ionicons name="home" /> */}
           </View>
           <View style={styles.itemViewAttributes}>
             <Text style={styles.itemAttributeText}>{formatDate(item.id)}</Text>
@@ -54,7 +55,7 @@ export default function HomeScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 3, //StatusBar.currentHeight || 0,
+    marginTop: 3,
   },
   home: {
     backgroundColor: "#fff",
