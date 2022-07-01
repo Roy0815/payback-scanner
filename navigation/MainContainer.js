@@ -7,8 +7,8 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import MatIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { ToastProvider } from "react-native-toast-notifications";
 
+// Screens
 import {
-  // Screens
   HomeScreen,
   AccountScreen,
   SettingsScreen,
@@ -22,6 +22,8 @@ import {
   accountName,
   settingsName,
 } from "./constants";
+
+//Context
 import { CaseContext, ListContext } from "./context";
 
 // Navigation objects
@@ -47,7 +49,7 @@ const _showHeader = (route) => {
 };
 
 // Stack Wrapper
-const HomeStackScreen = ({ route }) => {
+const HomeStackScreen = () => {
   const { filterCases, sortCases } = React.useContext(CaseContext);
   const { filterSettings, sortSettings } = React.useContext(ListContext);
 
@@ -56,20 +58,19 @@ const HomeStackScreen = ({ route }) => {
       <HomeStack.Screen
         name={homeName}
         component={HomeScreen}
-        // initialParams={{ listCases: allCases }}
         options={{
           headerRight: () => (
             <View style={styles.headerButtonView}>
               <MatIcons.Button
                 onPress={sortCases}
-                backgroundColor="white"
+                backgroundColor="transparent"
                 iconStyle={styles.headerButton}
                 size={22}
                 name={sortSettings ? "sort-ascending" : "sort-variant"}
               />
               <MatIcons.Button
                 onPress={() => filterCases()}
-                backgroundColor="white"
+                backgroundColor="transparent"
                 iconStyle={styles.headerButton}
                 size={21}
                 name={
@@ -78,7 +79,7 @@ const HomeStackScreen = ({ route }) => {
               />
               <MatIcons.Button
                 onPress={_addCase}
-                backgroundColor="white"
+                backgroundColor="transparent"
                 iconStyle={styles.headerButton}
                 size={22}
                 name="plus"
@@ -96,7 +97,7 @@ const HomeStackScreen = ({ route }) => {
   );
 };
 
-export default function HomeContainer({ allCases }) {
+export default function HomeContainer() {
   return (
     <ToastProvider>
       <NavigationContainer>
