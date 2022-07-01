@@ -2,11 +2,10 @@ import * as ImagePicker from "expo-image-picker";
 import * as MediaLibrary from "expo-media-library";
 
 const albumName = "Payback Scanner";
-var album = {};
-var imageBuffer = {};
+var album;
+var imageBuffer = [];
 
 const _saveImage = async (uri) => {
-  console.log("before");
   let asset = await MediaLibrary.createAssetAsync(uri);
 
   if (!album) album = await MediaLibrary.getAlbumAsync(albumName);
@@ -16,26 +15,34 @@ const _saveImage = async (uri) => {
   } else {
     await MediaLibrary.addAssetsToAlbumAsync(asset, album, false);
   }
+
+  return asset.filename;
 };
 
-const _getImageFromDevice = async (name) => {
+const _getImagesFromAlbum = async () => {
   //get album
-  if (!album.id) album = await MediaLibrary.getAlbumAsync(albumName);
+  if (!album || !album.id) album = await MediaLibrary.getAlbumAsync(albumName);
 
   let result = await MediaLibrary.getAssetsAsync({
     album: await MediaLibrary.getAlbumAsync(albumName),
   });
 
-  //build regex and search
-  let regex = new RegExp(`.*\/${albumName}\/${name}\..*`);
+  return result.assets;
+};
 
-  let index = result.assets.findIndex((item) => regex.test(item.uri));
+const _getImageFromDevice = async (name) => {
+  let assets = await _getImagesFromAlbum();
+
+  //build regex and search
+  // path = "*/Album/*.*"
+  let regex = new RegExp(`.*\/${albumName}\/${name.split(".")[0]}\..*`);
+
+  let index = assets.findIndex((item) => regex.test(item.uri));
 
   if (index != -1) {
     //fill buffer and return
-    imageBuffer[name] = result.assets[index].uri;
-    console.log(result.assets[index].uri);
-    return result.assets[index].uri;
+    imageBuffer[name] = assets[index].uri;
+    return assets[index].uri;
   }
 };
 
@@ -54,11 +61,9 @@ const pickImage = async () => {
     quality: 1,
   });
 
-  console.log(result);
-
   if (!result.cancelled) {
-    let saveResult = await _saveImage(result.uri);
-    console.log(saveResult);
+    //name
+    return await _saveImage(result.uri);
   }
 };
 
@@ -69,12 +74,29 @@ const takePhoto = async () => {
     quality: 1,
   });
 
-  console.log(result);
-
   if (!result.cancelled) {
-    let saveResult = await _saveImage(result.uri);
-    console.log(saveResult);
+    //name
+    return await _saveImage(result.uri);
   }
 };
 
-export { takePhoto, pickImage, getImage };
+const getUnusedImages = async (allCases) => {
+  let unusedAssets = [];
+  let assets = await _getImagesFromAlbum();
+
+  //check all pictures in album
+  assets.forEach((asset) => {
+    //if not used in any case
+    if (-1 === allCases.findIndex((item) => item.uri === asset.uri)) {
+      unusedAssets.push(asset);
+    }
+  });
+
+  return unusedAssets;
+};
+
+const deleteImages = async (assets) => {
+  return await MediaLibrary.deleteAssetsAsync(assets);
+};
+
+export { takePhoto, pickImage, getImage, getUnusedImages, deleteImages };
