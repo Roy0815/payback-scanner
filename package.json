@@ -26,14 +26,18 @@
     "react": "^17.0.2",
     "react-dom": "17.0.2",
     "react-native": "^0.68.2",
+    "react-native-dotenv": "^3.3.1",
     "react-native-gesture-handler": "~2.2.1",
     "react-native-image-modal": "^1.0.16",
     "react-native-toast-notifications": "^3.3.0",
     "react-native-vector-icons": "^9.1.0",
-    "react-native-web": "0.17.7"
+    "react-native-web": "0.17.7",
+    "expo-file-system": "~14.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.4",
+    "metro-react-native-babel-preset": "^0.71.2"
   },
   "private": true
 }
