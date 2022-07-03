@@ -29,11 +29,29 @@ const setCase = async (object) => {
 };
 
 const formatDate = (ms) => {
-  return Moment(new Date(ms)).format("DD/MM/YYYY, HH:mm:ss");
+  return Moment(new Date(ms)).format("DD/MM/YYYY");
+};
+
+const formatTime = (ms) => {
+  return Moment(new Date(ms)).format("HH:mm:ss");
+};
+
+const formatAmount = (amount) => {
+  return amount
+    .toString()
+    .replace(".", ",")
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };
 
 const sortCases = (caseList) => {
   return caseList.sort((a, b) => b.id - a.id);
 };
 
-export { getAllCases, setCase, formatDate, sortCases };
+export {
+  getAllCases,
+  setCase,
+  formatDate,
+  formatTime,
+  formatAmount,
+  sortCases,
+};
