@@ -31,8 +31,8 @@ export default function App() {
 
     if (index === -1) return;
 
-    setCase(cases[index]);
     cases[index] = object;
+    setCase(cases[index]);
     setAllCases(cases);
     setListCases(cases);
 
