@@ -1,19 +1,21 @@
 //external imports
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   SafeAreaView,
   View,
   StyleSheet,
   Text,
-  Button,
   FlatList,
-  StatusBar,
   Image,
   TouchableOpacity,
 } from "react-native";
 
 //local imports
-import { formatDate } from "../../functions/caseFunctions";
+import {
+  formatDate,
+  formatTime,
+  formatAmount,
+} from "../../functions/caseFunctions";
 import { caseDetailName } from "../constants";
 import { CaseContext } from "../context";
 
@@ -30,8 +32,32 @@ export default function HomeScreen({ navigation, route }) {
             <Text style={styles.itemNameText}>{item.name}</Text>
           </View>
           <View style={styles.itemViewAttributes}>
-            <Text style={styles.itemAttributeText}>{formatDate(item.id)}</Text>
-            <Text style={styles.itemAttributeText}>{formatDate(item.id)}</Text>
+            <View style={styles.itemViewAttribute}>
+              <Text style={styles.itemAttributeLabel}>Date</Text>
+              <Text style={styles.itemAttributeText}>
+                {formatDate(item.id)}
+              </Text>
+            </View>
+            <View style={styles.itemViewAttribute}>
+              <Text style={styles.itemAttributeLabel}>Time</Text>
+              <Text style={styles.itemAttributeText}>
+                {formatTime(item.id)}
+              </Text>
+            </View>
+            <View style={styles.itemViewAttribute}>
+              <Text style={styles.itemAttributeLabel}>Vendor</Text>
+              <Text style={styles.itemAttributeText}>
+                {item.vendor ? item.vendor : "?"}
+              </Text>
+            </View>
+            <View style={styles.itemViewAttribute}>
+              <Text style={styles.itemAttributeLabel}>Amount</Text>
+              <Text style={styles.itemAttributeText}>
+                {item.amount && item.currency
+                  ? `${formatAmount(item.amount)} ${item.currency}`
+                  : "?"}
+              </Text>
+            </View>
           </View>
         </View>
         <Image source={{ uri: item.uri }} style={styles.image} />
@@ -80,20 +106,21 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   itemViewHeader: {
-    // flex: 1,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
   },
   itemViewInfo: {
     flex: 1,
-    // justifyContent: "center",
-    // alignItems: "center",
   },
   itemViewAttributes: {
     flex: 1,
-    justifyContent: "center",
-    // alignItems: "center",
+    justifyContent: "flex-start",
+    marginTop: 5,
+  },
+  itemViewAttribute: {
+    justifyContent: "flex-start",
+    flexDirection: "row",
   },
   homeText: {
     fontSize: 26,
@@ -102,6 +129,11 @@ const styles = StyleSheet.create({
   itemNameText: {
     fontSize: 16,
     fontWeight: "bold",
+  },
+  itemAttributeLabel: {
+    fontWeight: "bold",
+    marginVertical: 1,
+    width: "40%",
   },
   itemAttributeText: {
     marginVertical: 1,
