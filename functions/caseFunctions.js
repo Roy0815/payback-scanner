@@ -1,8 +1,5 @@
 import Moment from "moment";
-import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-import { getImage } from "./imageFunctions";
 
 const caseKeyPrefix = "CaseKey=";
 
