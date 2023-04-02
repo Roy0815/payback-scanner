@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Button, View, StyleSheet, Text } from "react-native";
 import { useToast } from "react-native-toast-notifications";
+import { Picker } from "@react-native-picker/picker";
 
 //local imports
 import { deleteImages, getUnusedImages } from "../../functions/imageFunctions";
+import { getDateFormat } from "../../functions/settingsFunctions";
 import { CaseContext } from "../context";
 
 export default function HomeScreen() {
   const { allCases } = React.useContext(CaseContext);
+  const [dateFormat, _setDateFormat] = React.useState(getDateFormat());
   const toast = useToast();
 
   const _deleteImages = () => {
@@ -29,6 +32,17 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
+      <View style={{ width: 200 }}>
+        <Picker
+          selectedValue={dateFormat}
+          onValueChange={(v) => _setDateFormat(v)}
+        >
+          <Picker.Item label="14/01/2022" value="DD/MM/YYYY" />
+          <Picker.Item label="14.01.2022" value="DD.MM.YYYY" />
+        </Picker>
+      </View>
+      <Button title="Open" onPress={() => pickerRef.current.focus()} />
+      <Button title="Close" onPress={() => pickerRef.current.blur()} />
       <Button title="Delete unused images" onPress={_deleteImages} />
     </View>
   );

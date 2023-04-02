@@ -1,6 +1,8 @@
 import Moment from "moment";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import { getDateFormat } from "./settingsFunctions";
+
 const caseKeyPrefix = "CaseKey=";
 
 const getAllCases = async () => {
@@ -29,7 +31,7 @@ const setCase = async (object) => {
 };
 
 const formatDate = (ms) => {
-  return Moment(new Date(ms)).format("DD/MM/YYYY");
+  return Moment(new Date(ms)).format(getDateFormat());
 };
 
 const formatTime = (ms) => {
